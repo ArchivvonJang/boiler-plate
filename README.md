@@ -1,16 +1,16 @@
 # MERN Stack Boiler Plate
 
-MERN Stack을 활용하여 회원가입/ 로그인/ 인증/ 로그아웃 + 기본 페이지 Bolier Plate를 구현하였다.
+> MERN Stack을 활용하여 회원가입/ 로그인/ 인증/ 로그아웃 + 기본 페이지 Bolier Plate를 구현하였다.
 
 <br/> 
 
-#### Boiler Plate 란?
+#### ✅ Boiler Plate 란?
 
 최소한의 변경으로 여러곳에서 재사용되며, 반복적으로 비슷한 형태를 띄는 코드, 필요한 기본 구성으로 이루어진 템플릿 코드 
 
 <br/> 
 
-#### MERN Stack 이란?
+#### ✅ MERN Stack 이란?
 
 MERN stands for MongoDB, Express, React, Node, after the four key technologies that make up the stack
 
@@ -35,6 +35,7 @@ Front-end는 React.js로, Application tier (Back-end)는 Node.js와 Express.js, 
 
 
 
+<br/> 
 
 #### 참고
 
