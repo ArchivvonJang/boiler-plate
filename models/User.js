@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
     },
     role : {
         type : Number,
-        default : 0
+        default : 0 //일반유저, 1 : 관리자
     },
     image : String,
     token : {
@@ -88,6 +88,20 @@ userSchema.methods.generateToken = function(callback){
     })
 }
 
+userSchema.statics.findByToken = function(token, callback){
+    
+    var user = this;
+
+    //토큰을 복호화 decode 한다.
+    // verify a token symmetric                    decoded userid
+    jwt.verify(token, 'secretToken', function(err, decoded){    
+        //유저 아이디를 이용해서 유저를 찾은 후, 클라이언트에서 가져온 Token과 DB에 보관된 Token이 일치하는지 확인
+        user.findOne({"_id" : jwt.decoded ,"token" : token}, function(err, user){
+            if(err) return callback(err);
+            callback(null, user); //에러가 없다면 유저 정보를 전달한다.
+        })
+    })
+}
 
 const User = mongoose.model('User', userSchema)// 이 스키마들을 모델로 감싸준다.
 
