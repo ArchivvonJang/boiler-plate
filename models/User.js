@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; //10자리인 salt를 만들어서 비밀번호를 암호화한다.
+const jwt = require('jsonwebtoken');
 
 // 스키마 생성
 const userSchema = mongoose.Schema({
@@ -62,14 +63,31 @@ userSchema.pre('save', function( next ){
 
 userSchema.methods.comparePassword = function(plainPassword, callback){
 
-
     //plainPassword 123456789 와 암호화된 비밀번호 $2b$10$phAhFQ9PSWPULRUwmNWbVOxvFtN7uyMt1Hht3rRB/7uK4zaXEnAV2 비교하려면
     //plainPassword도 암호화해서 비교
     bcrypt.compare(plainPassword, this.password, function(err, isMatch){
-        if(err) return callback(err),    //false
-                 callback(null, isMatch) //true
+        if(err) return callback(err);   //false
+           callback(null, isMatch) //true
     })
 }
+
+
+userSchema.methods.generateToken = function(callback){
+
+    var user = this;
+
+    //jsonwebtoken을 이용해서 token을 생성한다.
+    var token = jwt.sign(user._id.toHexString(), 'secretToken')
+
+    //user._id + 'sercretToken' = token -> 'secretToken'를 이용해서 -> user._id를 찾는다.
+
+    user.token = token
+    user.save(function(err,user){
+        if(err) return callback(err);
+        callback(null, user)
+    })
+}
+
 
 const User = mongoose.model('User', userSchema)// 이 스키마들을 모델로 감싸준다.
 

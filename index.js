@@ -4,7 +4,7 @@ const app = express() //새로운 express앱을 생성하고
 const port = 5000 //포트생성
 
 const bodyParser = require('body-parser');  //body parser가 클라이언트로부터 오는 정보를 서버에서 분석해서 가져올 수 있게 해준다.
-
+const cookieParser = require('cookie-parser'); //토큰을 쿠키에 저장하기 위해 불러온다. 
 const config = require('./config/key');
 
 // User모델을 가져온다.
@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 //application/json 으로 된 것을 가져온다.
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 //몽구스를 활용해 몽고DB 연결
 const mongoose = require('mongoose');
@@ -47,10 +48,13 @@ app.post('/register', (req, res) => {
 })
 
 //Login Route
-app.post('/login', (req,res)=>{
+app.post('/api/users/login', (req,res)=>{
 
   //1. 요청된 이메일을 데이터베이스에서 있는지 찾는다.
   User.findOne({email : req.body.email} , (err, user)=>{
+
+    console.log('user', user)
+
     if(!user){
       return res.json({
         loginSuccess : false,
@@ -60,18 +64,23 @@ app.post('/login', (req,res)=>{
 
      //2. 요청한 eamil이 데이터베이스에 있다면 비밀번호가 같은지 확인
      user.comparePassword( req.body.password, (err, isMatch)=>{
+        
        if(!isMatch) return res.json({loginSuccess : false, message : "비밀번호가 틀렸습니다."})
 
-       //3. 비밀번호까지 같다면 Token 생성
+       //3. 비밀번호까지 같다면 Token 생성 - jsonWebToken 라이브러리 사용 https://www.npmjs.com/package/jsonwebtoken
        user.generateToken((err, user) => {
-         
+        if(err) return req.status(400).send(err)
+
+        //Token을 저장한다. 어디에? Cookies or Local Storage, Session...
+         res.cookie('x_auth', user.token)
+          .status(200) //성공시
+          .json({
+            loginSuccess : true,
+            userId : user._id
+          }) 
        })
      })
   })
-
-
-
- 
 
 
 })
