@@ -25,17 +25,18 @@ mongoose
   .catch(e => console.error(e));   
 
 
-//간단한 Router
+//Test Route
 app.get('/', (req, res) => { // root 디렉토리에 오면 포트에 해당 문자열 실행
   res.send('Hello World! 안녕하세요!!!!')
 }) 
 
-//회원가입 Router
+//Regsiter Route
 app.post('/register', (req, res) => {
 
   //회원가입할 때 필요한 정보들을 client에서 가져오면 그것들을 데이터베이스에 넣어준다.
-
   const user = new User(req.body)
+
+  //save 전에 비밀번호 암호화
 
   user.save((err, userInfo) => {
     if(err) return res.json({ success : false, err})
@@ -45,9 +46,16 @@ app.post('/register', (req, res) => {
   }) 
 })
 
+//Login Route
+app.post('/login', (req,res)=>{
 
+  //1. 요청된 이메일을 데이터베이스에서 있는지 찾는다.
+
+  //2. 데이터베이스에서요청한 eamil이 있다면 비밀번호가 같은지 확인
+
+  //3. 비밀번호까지 같다면 Token 생성
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port} `) 
 })
-//Node.js 를 통해 실행중인 모든 서버를 종료 : taskkill /IM node.exe /F
