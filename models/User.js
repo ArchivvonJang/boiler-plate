@@ -60,6 +60,17 @@ userSchema.pre('save', function( next ){
 
 })
 
+userSchema.methods.comparePassword = function(plainPassword, callback){
+
+
+    //plainPassword 123456789 와 암호화된 비밀번호 $2b$10$phAhFQ9PSWPULRUwmNWbVOxvFtN7uyMt1Hht3rRB/7uK4zaXEnAV2 비교하려면
+    //plainPassword도 암호화해서 비교
+    bcrypt.compare(plainPassword, this.password, function(err, isMatch){
+        if(err) return callback(err),    //false
+                 callback(null, isMatch) //true
+    })
+}
+
 const User = mongoose.model('User', userSchema)// 이 스키마들을 모델로 감싸준다.
 
 module.exports = { User } //다른 곳에서도 쓸 수 있게 처리해준다.
