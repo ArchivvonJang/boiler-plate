@@ -77,9 +77,9 @@ userSchema.methods.generateToken = function(callback){
     var user = this;
 
     //jsonwebtoken을 이용해서 token을 생성한다.
-    var token = jwt.sign(user._id.toHexString(), 'secretToken')
+    var token = jwt.sign(user._id.toHexString(), '1234')
 
-    //user._id + 'sercretToken' = token -> 'secretToken'를 이용해서 -> user._id를 찾는다.
+    //user._id + 'sercretToken' = token -> '1234'를 이용해서 -> user._id를 찾는다.
 
     user.token = token
     user.save(function(err,user){
@@ -88,15 +88,16 @@ userSchema.methods.generateToken = function(callback){
     })
 }
 
+//static -> 객체의 인스턴스를 만들지 않아도 사용이 가능
 userSchema.statics.findByToken = function(token, callback){
     
     var user = this;
 
     //토큰을 복호화 decode 한다.
     // verify a token symmetric                    decoded userid
-    jwt.verify(token, 'secretToken', function(err, decoded){    
+    jwt.verify(token, '1234', function(err, decoded){    
         //유저 아이디를 이용해서 유저를 찾은 후, 클라이언트에서 가져온 Token과 DB에 보관된 Token이 일치하는지 확인
-        user.findOne({"_id" : jwt.decoded ,"token" : token}, function(err, user){
+        user.findOne({"_id" : decoded, "token" : token}, function(err, user){
             if(err) return callback(err);
             callback(null, user); //에러가 없다면 유저 정보를 전달한다.
         })
