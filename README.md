@@ -1,6 +1,6 @@
 # MERN Stack Boiler Plate
 
-> MERN Stack을 활용하여 회원가입/ 로그인/ 인증/ 로그아웃 + 기본 페이지 Bolier Plate를 구현하였다.
+> MERN Stack을 활용하여 회원가입/ 로그인/ 인증/ 로그아웃 API + 기본 페이지 Bolier Plate를 구현
 
 <br/> 
 
@@ -12,7 +12,7 @@
 
 #### ✅ MERN Stack 이란?
 
-MERN stands for MongoDB, Express, React, Node, after the four key technologies that make up the stack
+MERN stands for MongoDB, Express, React, Node, after the four key technologies that make up the stack.
 
 * M : MongoDB - document database
 * E : Express.js - Node.js web framework
