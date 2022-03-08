@@ -32,6 +32,11 @@ app.get('/', (req, res) => { // root 디렉토리에 오면 포트에 해당 문
   res.send('Hello World! 안녕하세요!!!!')
 }) 
 
+app.get('/api/hello', (req,res)=>{
+  res.send("안녕하세요~")
+})
+
+
 //Regsiter Route
 app.post('/api/users/register', (req, res) => {
 
