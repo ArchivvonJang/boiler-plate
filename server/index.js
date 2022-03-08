@@ -1,7 +1,7 @@
 //백앤드 시작점
 const express = require('express') //express module을 가져온다
 const app = express() //새로운 express앱을 생성하고
-const port = 5000 //포트생성
+
 
 const bodyParser = require('body-parser');  //body parser가 클라이언트로부터 오는 정보를 서버에서 분석해서 가져올 수 있게 해준다.
 const cookieParser = require('cookie-parser'); //토큰을 쿠키에 저장하기 위해 불러온다. 
@@ -119,6 +119,10 @@ app.get('/api/users/logout', auth, (req, res)=>{
     })
 })
 
+
+
+
+const port = 5000 //포트생성
 //connect and port number check 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port} `) 
