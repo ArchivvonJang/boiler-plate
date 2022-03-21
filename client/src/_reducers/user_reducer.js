@@ -1,6 +1,7 @@
 import {
     LOGIN_USER
     ,REGISTER_USER
+    ,AUTH_USER
 } from '../_actions/types';
 
 
@@ -15,6 +16,10 @@ export default function(state={}, action){
     
         case REGISTER_USER:
             return{...state, register : action.payload}
+            //break;
+
+        case AUTH_USER:
+            return{...state, userData : action.payload} //userData - authroute에서 얻어낸 유저 정보가 reducer의 payload에 들어있기 때문.
             //break;
 
         default:

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
     LOGIN_USER,
-    REGISTER_USER
+    REGISTER_USER,
+    AUTH_USER
 } from './types';
 
 //email, password를 dataToSubmit 파라미터를 통해 받는다.
@@ -29,4 +30,16 @@ export function registerUser(dataToSubmit){
         type : REGISTER_USER,
         payload : request
     }
+}  
+    export function auth(){
+
+        const request = axios.get('/api/users/auth')
+        .then(response => 
+            response.data 
+        )
+    
+        return{
+            type : AUTH_USER,
+            payload : request
+        }    
 }
