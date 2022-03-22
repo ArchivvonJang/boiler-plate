@@ -2,6 +2,8 @@ import React, { useState } from "react";
 //import Axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginUser } from '../../../_actions/user_action' 
+import Auth from './hoc/auth';
+import {withRouter} from 'react-router-dom';
 
 function LoginPage(props){
     //redux dispatch 추가
@@ -70,4 +72,5 @@ function LoginPage(props){
     )
 }
 
-export default LoginPage
+//export default withRouter(LoginPage)
+export default Auth(LoginPage, null)

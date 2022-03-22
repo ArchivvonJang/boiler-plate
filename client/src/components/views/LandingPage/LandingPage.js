@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import axios from 'axios';
 //import { response } from "express";
-
+import Auth from './hoc/auth';
+import {withRouter} from 'react-router-dom';
 
 function LandingPage(props){
     //LandingPage에 들어오자마자 실행 서버에 /api/hello get으로 보낸 후 받은 응답을 화면에 보여줌
@@ -38,4 +39,4 @@ function LandingPage(props){
     )
 }
 
-export default LandingPage
+export default Auth(LandingPage, false);
